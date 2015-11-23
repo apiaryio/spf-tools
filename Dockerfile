@@ -10,6 +10,8 @@ RUN useradd -G sudo -m spf-user
 
 WORKDIR /home/spf-user
 
+COPY . /home/spf-user/spf-tools
+
 USER spf-user
 
 CMD ["./spf-tools/runspftools.sh"]
