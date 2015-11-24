@@ -22,9 +22,6 @@ zonefile=$(mktemp /tmp/cloudflare-zone-XXXX)
 cat > $zonefile
 trap "rm $idsfile $zonefile" EXIT
 
-# Read TOKEN and EMAIL
-. $HOME/.spf-toolsrc
-
 test -n "$TOKEN" || { echo "TOKEN not set! Exiting."; exit 1; }
 test -n "$EMAIL" || { echo "EMAIL not set! Exiting."; exit 1; }
 
