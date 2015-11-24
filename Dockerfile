@@ -1,7 +1,7 @@
 FROM        debian:jessie
 MAINTAINER  Apiary <sre@apiary.io>
 
-ENV REFRESHED_AT 2015-11-23
+ENV REFRESHED_AT 2015-11-24
 
 RUN apt-get update && \
     apt-get install -y jq curl dnsutils
@@ -14,4 +14,4 @@ COPY . /home/spf-user/spf-tools
 
 USER spf-user
 
-CMD ["./spf-tools/runspftools.sh"]
+CMD ["./spf-tools/docker/run.sh"]
