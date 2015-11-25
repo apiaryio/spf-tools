@@ -1,7 +1,7 @@
 FROM        debian:jessie
 MAINTAINER  Apiary <sre@apiary.io>
 
-ENV REFRESHED_AT 2015-11-24
+ENV REFRESHED_AT 2015-11-25
 
 RUN apt-get update && \
     apt-get install -y jq curl dnsutils
