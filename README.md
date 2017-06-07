@@ -242,9 +242,9 @@ The ``.edgerc`` file should be placed in the project root directory and should h
 
 Make sure the following environment variables are set or supplied to the script:
 
-- DOMAIN
-- ORIG_SPF
-- DRY_RUN - only needed if you'd like to test the script without making modifications to the actual DNS records (i.e. no POST API call is made at the end)
+- ``DOMAIN``
+- ``ORIG_SPF``
+- ``DRY_RUN`` - only needed if you'd like to test the script without making modifications to the actual DNS records (i.e. no POST API call is made at the end)
 
 The script does the following:
 
@@ -257,7 +257,7 @@ Usage:
 
     ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
 
-To compare the records first and only continue if needed:
+To compare the records first and only continue, if needed:
 
     ./compare.sh $DOMAIN $ORIG_SPF || ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
 

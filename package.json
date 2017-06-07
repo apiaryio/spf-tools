@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha test tests/akamai"
+    "test": "mocha test plugin-tests/akamai"
   },
   "repository": {
     "type": "git",
