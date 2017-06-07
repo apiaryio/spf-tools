@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
 var EdgeGrid = require('edgegrid');
-var dnszone = process.env.DOMAIN;
 
-if (dnszone == undefined){
-  console.error("No DOMAIN specified");
+if (process.env.DOMAIN == undefined || process.env.ORIG_SPF == undefined){
+  console.error("Please set the DOMAIN and ORIG_SPF (e.g. example.com and spf-orig.example.com).");
   process.exit(1);
 }
 
@@ -16,20 +15,27 @@ stdin.on('data', function(data){
 });
 
 stdin.on('end', function(){
-  console.log('done!');
-  console.log(JSON.stringify(spf_records));
+  console.log("Fetching zone file from Akamai API for domain " + process.env.DOMAIN);
   getZoneFile(spf_records, function(error, zonefile){
     if (error){
       console.error(error);
       process.exit(1);
     }
+    console.log("Updating zone file with new SPF records");
     updateZoneFile(zonefile, spf_records);
-    postZoneFile(zonefile);
+    if (process.env.DRY_RUN != undefined){
+      console.log("This is a dry run so I won't post anything. This is what I would have:");
+      console.log(JSON.stringify(zonefile));
+    }
+    else {
+      postZoneFile(zonefile);
+    }
   });
 });
 
 
 function parseSpfItem(data){
+  console.log(data.toString());
   var spfpartial = data.toString().split("^");
   return {
     target: JSON.parse(spfpartial[1]),
@@ -40,8 +46,8 @@ function parseSpfItem(data){
 }
 
 function getSpfItemName(data){
-  var itemName = data.replace("." + dnszone, '');
-  if (data === dnszone) itemName = null;
+  var itemName = data.replace("." + process.env.DOMAIN, '');
+  if (data === process.env.DOMAIN) itemName = null;
   return itemName;
 }
 
@@ -52,7 +58,7 @@ function getZoneFile(spf_records, cb){
   });
 
   eg.auth({
-    path: '/config-dns/v1/zones/' + dnszone,
+    path: '/config-dns/v1/zones/' + process.env.DOMAIN,
     method: 'GET',
     headers: {}
   });
@@ -66,14 +72,14 @@ function getZoneFile(spf_records, cb){
 function updateZoneFile(zonefile, spf_records){
   zonefile.zone.soa.serial += 1;
   var txt_records = zonefile.zone.txt;
+  var spf_orig_record = getSpfItemName(process.env.ORIG_SPF);
   var other_records = txt_records.filter(function (item) {
     var include = true;
     if (item.name === null){
-      // remove "null" spf record
-      if (item.target.includes('v=spf1')) include = false;
+      if (item.target.includes('v=spf1')) include = false; // remove the first spf record (with null name)
     }
-    else if (item.name.includes('spf-orig')) include = true;
-    else if (item.name.includes('spf')) include = false;
+    else if (item.name.includes(spf_orig_record)) include = true; // we want to keep the ORIG_SPF record
+    else if (item.name.includes('spf')) include = false; // get rid of the old SPF records
     return include;
   });
   var updated_records = other_records.concat(spf_records);
@@ -95,7 +101,7 @@ function postZoneFile(zonefile){
   });
 
   eg.auth({
-    path: '/config-dns/v1/zones/' + dnszone,
+    path: '/config-dns/v1/zones/' + process.env.DOMAIN,
     method: 'POST',
     headers: {
       'Content-Type': "application/json"
@@ -115,8 +121,8 @@ function exitOnError(error, response, body) {
     process.exit(1);
   }
 
-  if (response.statusCode !== 200){
-    console.error(body);
+  if (response.statusCode != 200 && response.statusCode != 204){
+    console.error('Error occurred. Status code received: ' + response.statusCode);
     process.exit(1);
   }
 }
