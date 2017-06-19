@@ -4,7 +4,9 @@ dependencies:
 
   pre:
     - sh -ex misc/ci-setup.sh
+    - npm install
 
 test:
   override:
     - sh -ex misc/ci-runtest.sh
+    - npm test
