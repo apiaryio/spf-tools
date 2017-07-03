@@ -1,2 +1,5 @@
 node_modules/
 .edgerc
+lambda/functions/spf-update/scripts
+npm-debug.log
+project.json

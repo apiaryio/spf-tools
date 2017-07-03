@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha test plugin-tests/akamai"
+    "test": "mocha test plugin-tests/akamai",
+    "lambda-prepare": "sh -c ./lambda/functions/spf-update/prepare-deploy.sh"
   },
   "repository": {
     "type": "git",
