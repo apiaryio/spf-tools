@@ -23,7 +23,7 @@ stdin.on('end', function(){
     }
     console.log("Updating zone file with new SPF records");
     updateZoneFile(zonefile, spf_records);
-    if (process.env.DRY_RUN != undefined){
+    if (process.env.DRY_RUN){
       console.log("This is a dry run so I won't post anything. This is what I would have:");
       console.log(JSON.stringify(zonefile));
     }
