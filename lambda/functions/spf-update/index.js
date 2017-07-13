@@ -37,7 +37,7 @@ function handler(event, context, cb) {
   process.env.DOMAIN = event.DOMAIN;
   process.env.ORIG_SPF = event.ORIG_SPF;
 
-  if (event.DRY_RUN == 1) {
+  if (parseInt(event.DRY_RUN) == 1) {
     process.env.DRY_RUN = 1;
   }
   callSpfTools((error, stdout, stderr) => {
