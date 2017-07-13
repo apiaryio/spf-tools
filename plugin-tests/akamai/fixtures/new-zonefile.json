@@ -2,7 +2,7 @@
   "zone": {
     "version": 1,
     "name": "example.com",
-    "instance": "test",
+    "instance": "Update by SPF tools",
     "id": 123456,
     "time": 1487781550,
     "soa": {

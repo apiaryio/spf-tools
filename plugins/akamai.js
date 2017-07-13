@@ -92,6 +92,7 @@ function updateZoneFile(zonefile, spf_records){
     return item1.name.localeCompare(item2.name);
   });
   zonefile.zone.txt = updated_records;
+  zonefile.zone.instance = "Update by SPF tools";
 }
 
 function postZoneFile(zonefile){
