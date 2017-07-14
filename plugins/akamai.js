@@ -23,7 +23,7 @@ stdin.on('end', function(){
     }
     console.log("Updating zone file with new SPF records");
     updateZoneFile(zonefile, spf_records);
-    if (process.env.DRY_RUN){
+    if (parseInt(process.env.DRY_RUN) == 1) {
       console.log("This is a dry run so I won't post anything. This is what I would have:");
       console.log(JSON.stringify(zonefile));
     }
@@ -92,6 +92,7 @@ function updateZoneFile(zonefile, spf_records){
     return item1.name.localeCompare(item2.name);
   });
   zonefile.zone.txt = updated_records;
+  zonefile.zone.instance = "Update by SPF tools";
 }
 
 function postZoneFile(zonefile){
