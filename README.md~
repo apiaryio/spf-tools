@@ -40,7 +40,6 @@ Create a configuration file:
     ORIG_SPF=spf-orig.jasan.tk
     DESPF_SKIP_DOMAINS=_spf.domain1.com:spf.domain2.org
     DNS_TIMEOUT=5
-    DNS_SERVER=
     EOF
 
 Now just call any of the scripts described below.
@@ -219,51 +218,6 @@ Example:
     ip4:13.111.3.0/24
     $ ./despf.sh cont.jasan.tk | ./iprange.sh
     ip4:13.111.0.0/22
-
-### plugins/akamai.js
-
-Script to update DNS records in Akamai FastDNS, using [DNS—Zone Record Management API](https://developer.akamai.com/api/luna/config-dns/overview.html)).
-
-Prerequisites:
-
-1. run ``npm install`` to install npm dependencies.
-1. create a file with credentials ``.edgerc`` 
-    (based on [Akamai instructions](https://developer.akamai.com/introduction/Conf_Client.html)).
-    
-The ``.edgerc`` file should be placed in the project root directory and should have the following format:
-
-```
-    [default]
-    host = akaa-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx.luna.akamaiapis.net
-    client_token = akab-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx
-    client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    access_token = akab-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx
-```
-
-Make sure the following environment variables are set or supplied to the script:
-
-- ``DOMAIN``
-- ``ORIG_SPF``
-- ``DRY_RUN`` - only needed if you'd like to test the script without making modifications to the actual DNS records (i.e. no POST API call is made at the end)
-
-The script does the following:
-
-1. fetches the current zone file for ``DOMAIN`` using Akamai API 
-1. remove old records with ``v=spf1`` in their value, except for the ``ORIG_SPF`` record
-1. adds the new spf records (received through pipe) to the zonefile, ordered alphabetically
-1. posts the updated file using Akamai API (unless ``DRY_RUN`` is set, then it only logs the updated zonefile to console)
-
-Usage:
-
-    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
-
-To compare the records first and only continue, if needed:
-
-    ./compare.sh $DOMAIN $ORIG_SPF || ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
-
-To test the changes (using ``DRY_RUN``):
-
-    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF DRY_RUN=1 node ./plugins/akamai.js
 
 ## Putting it all together
 
