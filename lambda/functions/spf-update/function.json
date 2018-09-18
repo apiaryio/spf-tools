@@ -1,5 +1,5 @@
 {
   "handler": "index.handler",
   "description": "",
-  "runtime": "nodejs6.10"
+  "runtime": "nodejs8.10"
 }
