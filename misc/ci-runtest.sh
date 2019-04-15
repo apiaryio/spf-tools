@@ -15,7 +15,7 @@ host jasan.tk
 
 echo "COVERAGE is $COVERAGE"
 if [ "x1" = "x$COVERAGE" ] ; then
-	$GEM_HOME/wrappers/bashcov -- tests/test-shell.sh
+	$GEM_HOME/wrappers/bashcov -- plugin-tests/test-shell.sh
 else
-	tests/test-shell.sh || DEBUG=1 tests/test-shell.sh
+	plugin-tests/test-shell.sh || DEBUG=1 plugin-tests/test-shell.sh
 fi
