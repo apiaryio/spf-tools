@@ -27,7 +27,9 @@ do
   type $cmd >/dev/null
 done
 
-a="/$0"; a=${a%/*}; a=${a#/}; a=${a:-.}; BINDIR=$(cd $a; pwd)
+test -n "$DOMAIN" && DOMAIN_OVER=$DOMAIN
+
+a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; BINDIR=$(cd $a; pwd)
 . $BINDIR/include/global.inc.sh
 . $BINDIR/include/despf.inc.sh
 
@@ -45,17 +47,22 @@ usage() {
 	  -s DOMAIN[:DOMAIN...]      skip domains, i.e. leave include
 	                             without decomposition
 	  -t N                       set DNS timeout to N seconds
+	  -d SERVER                  forcefully set queried DNS server
+	                             and disable auto-detection
 	  -h                         display this help and exit
 	EOF
     exit 1
 }
 
-domain=${DOMAIN:-'spf-orig.jasan.tk'}
+domain=${ORIG_SPF:-'spf-orig.jasan.tk'}
+test -n "$DOMAIN_OVER" && domain=$DOMAIN_OVER
+
 test -n "$domain" -o "$#" -gt 0 || usage
-while getopts "t:s:h-" opt; do
+while getopts "t:s:d:h-" opt; do
   case $opt in
     t) test -n "$OPTARG" && DNS_TIMEOUT=$OPTARG;;
     s) test -n "$OPTARG" && DESPF_SKIP_DOMAINS=$OPTARG;;
+    d) test -n "$OPTARG" && DNS_SERVER=$OPTARG;;
     *) usage;;
   esac
 done

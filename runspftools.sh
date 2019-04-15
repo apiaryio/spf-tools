@@ -17,7 +17,9 @@
 #
 ##############################################################################
 
-a="/$0"; a=${a%/*}; a=${a#/}; a=${a:-.}; BINDIR=$(cd $a; pwd)
+test -n "$DEBUG" && set -x
+
+a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; BINDIR=$(cd $a; pwd)
 . $BINDIR/include/global.inc.sh
 
 # Read DOMAIN and ORIG_SPF from spf-toolsrc

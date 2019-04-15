@@ -24,7 +24,7 @@
 # Requires AWS CLI from https://aws.amazon.com/cli/
 #
 # Usage: ./despf.sh | ./simplify.sh | mkblocks.sh | \
-#          mkzoneent.sh | ./route53.sh <hosted_zone_id>
+#          ./route53.sh <hosted_zone_id>
 # E.g.: ... | ./route53.sh ABCXYZEXAMPLE
 
 # The AWS CLI can be configured using ~/.aws/credentials or using
@@ -37,7 +37,7 @@ do
   type $cmd >/dev/null || exit 1
 done
 
-a="/$0"; a=${a%/*}; a=${a#/}; a=${a:-.}; BINDIR=$(cd $a; pwd)
+a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; BINDIR=$(cd $a; pwd)
 . $BINDIR/include/global.inc.sh
 
 # default values

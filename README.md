@@ -11,10 +11,9 @@
 [![Codeship badge][codeship-img]][codeship]
 [![Travis-CI badge][travis-img]][travis]
 [![SemaphoreCI badge][semaphore-img]][semaphore]
-[![Magnum CI badge][magnum-img]][magnum]
 [![Shippable badge][shippable-img]][shippable]
 
-[![Join the chat at https://gitter.im/jsarenik/spf-tools][gitter-img]][gitter]
+[![Join the chat at https://gitter.im/spf-tools/spf-tools][gitter-img]][gitter]
 
 Simple tools for keeping the SPF TXT records tidy in order to fight
 [10 maximum DNS look-ups](http://serverfault.com/questions/584708).
@@ -23,7 +22,7 @@ Simple tools for keeping the SPF TXT records tidy in order to fight
 
 ### 2016/11 - new records on output
 
-spf-tools in version f4f51f7d327820c904572ea54c37634e2b2b792a do not
+spf-tools since version spf-tools/spf-tools@f4f51f7 do not
 output merely `ip4` and `ip6` records, but also keep original `ptr`
 and `exists` ones.
 
@@ -41,6 +40,7 @@ Create a configuration file:
     ORIG_SPF=spf-orig.jasan.tk
     DESPF_SKIP_DOMAINS=_spf.domain1.com:spf.domain2.org
     DNS_TIMEOUT=5
+    DNS_SERVER=
     EOF
 
 Now just call any of the scripts described below.
@@ -195,7 +195,7 @@ documentation.
 Usage:
 
     ./despf.sh | ./simplify.sh | ./mkblocks.sh | \
-      ./mkzoneent.sh | ./route53.sh <hosted_zone_id>
+      ./route53.sh <hosted_zone_id>
 
 
 ### iprange.sh
@@ -300,17 +300,15 @@ To test the changes (using ``DRY_RUN``):
     limitations under the License.
 
 
-[circle-img]: https://circleci.com/gh/jsarenik/spf-tools/tree/master.png?circle-token=76b5be548795219cce8df5780def8eceaa134c35 "Test status"
-[circle]: https://circleci.com/gh/jsarenik/spf-tools
-[codeship-img]: https://codeship.com/projects/8958e590-0616-0133-c43a-12a4c431c178/status?branch=master
-[codeship]: https://codeship.com/projects/89613
-[travis-img]: https://travis-ci.org/jsarenik/spf-tools.svg?branch=master
-[travis]: https://travis-ci.org/jsarenik/spf-tools
-[semaphore-img]: https://semaphoreci.com/api/v1/jsarenik/spf-tools/branches/master/badge.svg
-[semaphore]: https://semaphoreci.com/jsarenik/spf-tools
-[magnum-img]: https://magnum-ci.com/status/10aadca49949b855fa11ca7a44022c8a.png
-[magnum]: https://magnum-ci.com/public/1acdb8198c9cbd13c5db/builds
+[circle-img]: https://circleci.com/gh/spf-tools/spf-tools/tree/master.png?circle-token=76b5be548795219cce8df5780def8eceaa134c35 "Test status"
+[circle]: https://circleci.com/gh/spf-tools/spf-tools
+[codeship-img]: https://app.codeship.com/projects/4b5902d0-9810-0136-69ce-0e10429ce0aa/status?branch=master
+[codeship]: https://codeship.com/projects/305167
+[travis-img]: https://travis-ci.org/spf-tools/spf-tools.svg?branch=master
+[travis]: https://travis-ci.org/spf-tools/spf-tools
+[semaphore-img]: https://semaphoreci.com/api/v1/spf-tools/spf-tools/branches/master/badge.svg
+[semaphore]: https://semaphoreci.com/spf-tools/spf-tools
 [gitter-img]: https://badges.gitter.im/Join%20Chat.svg
-[gitter]: https://gitter.im/jsarenik/spf-tools
+[gitter]: https://gitter.im/spf-tools/spf-tools
 [shippable-img]: https://api.shippable.com/projects/5770eda33be4f4faa56ae58a/badge?branch=master
 [shippable]: https://app.shippable.com/projects/5770eda33be4f4faa56ae58a/status/
