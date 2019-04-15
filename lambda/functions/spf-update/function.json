@@ -1,0 +1,5 @@
+{
+  "handler": "index.handler",
+  "description": "",
+  "runtime": "nodejs8.10"
+}
