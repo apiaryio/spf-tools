@@ -5,7 +5,7 @@ AWS lambda function to call some of the SPF tools script for the given domain an
 The function calls the following commands:
 
 1. `compare.sh $DOMAIN $ORIG_SPF`
-1. `despf.sh $ORIG_SPF | normalize.sh | simplify.sh | mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF DRY_RUN=$DRY_RUN node ./scripts/plugins/akamai.js`
+1. `despf.sh $ORIG_SPF | normalize.sh | simplify.sh | mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF DRY_RUN=$DRY_RUN node ./scripts/plugins/akamai/akamai.js`
 
 The function expects `event` to include both `DOMAIN` and `ORIG_SPF`, e.g.:
 

@@ -220,7 +220,7 @@ Example:
     $ ./despf.sh cont.jasan.tk | ./iprange.sh
     ip4:13.111.0.0/22
 
-### plugins/akamai.js
+### plugins/akamai/akamai.js
 
 Script to update DNS records in Akamai FastDNS, using [DNS—Zone Record Management API](https://developer.akamai.com/api/luna/config-dns/overview.html)).
 
@@ -255,15 +255,15 @@ The script does the following:
 
 Usage:
 
-    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
+    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai/akamai.js
 
 To compare the records first and only continue, if needed:
 
-    ./compare.sh $DOMAIN $ORIG_SPF || ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai.js
+    ./compare.sh $DOMAIN $ORIG_SPF || ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF node ./plugins/akamai/akamai.js
 
 To test the changes (using ``DRY_RUN``):
 
-    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF DRY_RUN=1 node ./plugins/akamai.js
+    ./despf.sh $ORIG_SPF | ./normalize.sh | ./simplify.sh | ./mkblocks.sh $DOMAIN | DOMAIN=$DOMAIN ORIG_SPF=$ORIG_SPF DRY_RUN=1 node ./plugins/akamai/akamai.js
 
 ## Putting it all together
 
