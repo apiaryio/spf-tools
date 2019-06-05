@@ -8,17 +8,21 @@ jobs:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-    - image: alpine
+    - image: node:8-alpine
       command: /sbin/init
     steps:
     - checkout
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    - run: apk --no-progress update
-    - run: apk --no-progress upgrade
     - run: apk --no-progress add diffutils coreutils sed grep
-    - run: apk --no-progress add bash mksh dash loksh mksh
+    - run: apk --no-progress add bash mksh dash loksh
     - run: sh -ex misc/ci-setup.sh
     - run: sh -ex misc/ci-runtest.sh
+    - run: touch .edgerc
+    - run: npm run lambda-prepare
+    - run: npm test
+    - run: 
+        command: node testSpfUpdate.js
+        working_directory: ~/spf-tools/lambda/functions/spf-update
     - store_test_results:
         path: /tmp/circleci-test-results
     - store_artifacts:

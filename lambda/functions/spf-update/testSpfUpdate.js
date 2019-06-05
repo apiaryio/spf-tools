@@ -8,4 +8,7 @@ spf_update.callSpfTools((error, stdout, stderr) => {
   console.log('test error:', error);
   console.log('test stdout:', stdout);
   console.log('test stderr:', stderr);
+  if (error) {
+    throw(error);
+  }
 });
