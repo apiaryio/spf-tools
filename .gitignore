@@ -3,3 +3,5 @@ node_modules/
 lambda/functions/spf-update/scripts
 npm-debug.log
 project.json
+.env_oci
+config.json

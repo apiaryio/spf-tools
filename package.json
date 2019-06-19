@@ -9,7 +9,8 @@
   "scripts": {
     "test": "mocha test plugin-tests/akamai",
     "lambda-prepare": "sh -c ./lambda/functions/spf-update/prepare-deploy.sh",
-    "lambda-cleanup": "sh -c ./lambda/functions/spf-update/cleanup.sh"
+    "lambda-cleanup": "sh -c ./lambda/functions/spf-update/cleanup.sh",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
